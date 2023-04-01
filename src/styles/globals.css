@@ -1,11 +1,12 @@
 :root {
-    --primary: #02BA80;
-    --text: #B0B0B3;
+    --primary: #0ed194;
+    --text: #cbcbce;
     --light: #FFFFFF;
     --accent: #E23E75;
     --dark: #33333D;
     --dark-secondary: rgb(64, 64, 72);
     --border-color: #58585a;
+    --max-width: 1200px;
 }
 
 html, body{
