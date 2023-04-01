@@ -1,0 +1,9 @@
+.navbar {
+    background-color: var(--dark-secondary);
+    height: 8vh;
+    border: var(--border-color) 1px solid;
+}
+.title {
+    margin: 0;
+    color: var(--light);
+}
