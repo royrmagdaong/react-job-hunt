@@ -1,9 +1,12 @@
 import styles from '@/styles/NavBar.module.css'
 import Link from 'next/link'
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 
 const NavBar = () => {
     const [user, setUser] = useState('')
+    const router = useRouter()
+
 
     useEffect(()=>{
         setUser(JSON.parse(localStorage.getItem('user')))
@@ -12,6 +15,7 @@ const NavBar = () => {
     const logout = () => {
         localStorage.removeItem('user')
         setUser('')
+        router.push('/login')
     }
 
     return (
@@ -25,6 +29,24 @@ const NavBar = () => {
                     <li className={styles["about"]}>
                         <Link href="/about">About</Link>
                     </li>
+                    {
+                        user?
+                        (user.role==='admin'?
+                            <li className={styles["about"]}>
+                                <Link href="/about">Users</Link>
+                            </li>:''
+                        )
+                        :''
+                    }
+                    {
+                        user?
+                        (user.role==='recruiter'?
+                            <li className={styles["about"]}>
+                                <Link href="/post-job">Post Job</Link>
+                            </li>:''
+                        )
+                        :''
+                    }
                     <li className={styles["login"]}>
                         {
                             user?<a onClick={logout}>Logout</a>:<Link href="/login">Login</Link>
@@ -32,7 +54,7 @@ const NavBar = () => {
                     </li>
                     <li className={styles["login"]} style={{marginLeft: '8px'}}>
                         {
-                            user?<>{user.name}</>:''
+                            user?<>{user.role}</>:''
                         }
                     </li>
                 </ul>
