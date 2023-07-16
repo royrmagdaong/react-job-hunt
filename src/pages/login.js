@@ -2,11 +2,14 @@ import styles from '@/styles/LoginForm.module.css'
 import NavBar from "@/components/NavBar";
 import { useState } from 'react';
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("admin@gmail.com");
+    const [password, setPassword] = useState("password123");
     const [errorMessages, setErrorMessages] = useState('');
+
+    const router = useRouter()
 
 
     const handleSubmit2 = () => {
@@ -16,6 +19,7 @@ const Login = () => {
 
         if(email && password){
             if(password.length >= 6){
+                setErrorMessages('')
                 // Make a request for a user with a given ID
                 axios.get('/json/users.json')
                 .then(function (response) {
@@ -29,6 +33,14 @@ const Login = () => {
                             if(user.email === email){
                                 console.log('Email Exists')
                                 emailExists = true
+                                if(user.password === password){
+                                    setErrorMessages('')
+                                    console.log('Logged in!')
+                                    localStorage.setItem('user', JSON.stringify(user))
+                                    router.push('/')
+                                }else{
+                                    setErrorMessages('Incorrect Password')
+                                }
                             }else{
                                 console.log('not equal')
                             }

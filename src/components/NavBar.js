@@ -1,7 +1,19 @@
 import styles from '@/styles/NavBar.module.css'
 import Link from 'next/link'
+import { useState, useEffect } from 'react';
 
 const NavBar = () => {
+    const [user, setUser] = useState('')
+
+    useEffect(()=>{
+        setUser(JSON.parse(localStorage.getItem('user')))
+    }, [])
+
+    const logout = () => {
+        localStorage.removeItem('user')
+        setUser('')
+    }
+
     return (
         <div className={styles['nav-container']}>
             <nav className={styles.navbar}>
@@ -14,7 +26,14 @@ const NavBar = () => {
                         <Link href="/about">About</Link>
                     </li>
                     <li className={styles["login"]}>
-                        <Link href="/login">Login</Link>
+                        {
+                            user?<a onClick={logout}>Logout</a>:<Link href="/login">Login</Link>
+                        }
+                    </li>
+                    <li className={styles["login"]} style={{marginLeft: '8px'}}>
+                        {
+                            user?<>{user.name}</>:''
+                        }
                     </li>
                 </ul>
             </nav>
