@@ -29,5 +29,5 @@
 .card:hover{
     border: var(--primary) 4px solid;
     cursor: pointer;
-    background-color: rgb(110, 110, 120);;
+    /* background-color: rgb(110, 110, 120); */
 }
